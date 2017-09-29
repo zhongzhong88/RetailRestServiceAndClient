@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl"> 
+
+<h1>Get RedSky Product Information</h1>
+
+<p>Product Id: <b>{{id}} </b>, Name: <b>{{name}}</b>, Price: <b>${{price}} {{currency}}</b></p>
+
+</div>
+
+
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  
+  $http.get("http://localhost:8080/MRRestWAR/rest/products?productNumber=13860429").then(function (response) {
+      $scope.product = response.data;
+      $scope.name = $scope.product.item.name;
+      $scope.id = $scope.product.item.id;
+      $scope.price = $scope.product.item.current_price.value;
+      $scope.currency = $scope.product.item.current_price.currency_code;
+      
+  });
+});
+</script>
+
+</body>
+</html>
